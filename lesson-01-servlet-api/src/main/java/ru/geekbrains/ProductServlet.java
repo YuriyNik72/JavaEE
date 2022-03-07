@@ -1,7 +1,9 @@
 package ru.geekbrains;
 
-import ru.geekbrains.persist.User;
-import ru.geekbrains.persist.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.geekbrains.persist.Product;
+import ru.geekbrains.persist.ProductRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,17 +13,21 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(urlPatterns = "/user/*")
-public class UserServlet extends HttpServlet {
 
-    private UserRepository userRepository;
+@WebServlet(urlPatterns = "/product")
+public class ProductServlet extends HttpServlet {
+    private static Logger logger = LoggerFactory.getLogger(ProductServlet.class);
+    private ProductRepository productRepository;
 
     @Override
     public void init() throws ServletException {
-        this.userRepository = new UserRepository();
-        this.userRepository.insert(new User("Alex"));
-        this.userRepository.insert(new User("Petr"));
-        this.userRepository.insert(new User("Felip"));
+        this.productRepository = new ProductRepository();
+        this.productRepository.insert(new Product("Milk", 15));
+        this.productRepository.insert(new Product("Bread", 10));
+        this.productRepository.insert(new Product("Butter",150));
+        this.productRepository.insert(new Product("Milk", 20));
+        this.productRepository.insert(new Product("Bread", 23));
+        this.productRepository.insert(new Product("Butter",170));
     }
 
     @Override
@@ -33,19 +39,25 @@ public class UserServlet extends HttpServlet {
 //        resp.getWriter().println("<p>queryString: " + req.getQueryString() + "</p>");
 //        resp.getWriter().println("<p>param1: " + req.getParameter("param1") + "</p>");
 //        resp.getWriter().println("<p>param2: " + req.getParameter("param2") + "</p>");
+            logger.debug("Print");
 
         PrintWriter wr = resp.getWriter();
         wr.println("<table>");
         wr.println("<tr>");
         wr.println("<th>Id</th>");
-        wr.println("<th>Username</th>");
+        wr.println("<th>Title</th>");
+        wr.println("<th>Cost</th>");
         wr.println("</tr>");
 
-        for(User user : userRepository.findAll()) {
-            wr.println("<tr>");
-            wr.println("<td><a href='" + "#link" +"'>" + user.getId() +"</a></td>");
-            wr.println("<td>" + user.getUsername() + "</td>");
-            wr.println("</tr>");
+
+        for(Product product : productRepository.findAll()) {
+
+                wr.println("<tr>");
+                wr.println("<td><a href='" + "/servlet/product/" + product.getId() +"'>" + product.getId() +"</a></td>");
+                wr.println("<td>" + product.getTitle() + "</td>");
+                wr.println("<td>" + product.getCost() + "</td>");
+                wr.println("</tr>");
+
         }
 
         wr.println("</table>");
