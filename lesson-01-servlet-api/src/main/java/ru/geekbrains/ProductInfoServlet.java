@@ -20,6 +20,17 @@ public class ProductInfoServlet extends HttpServlet {
     private ProductRepository productRepository;
     private Product product;
 
+    @Override
+    public void init() throws ServletException {
+        this.productRepository = new ProductRepository();
+        this.productRepository.insert(new Product("Milk", 15));
+        this.productRepository.insert(new Product("Bread", 10));
+        this.productRepository.insert(new Product("Butter",150));
+        this.productRepository.insert(new Product("Milk", 20));
+        this.productRepository.insert(new Product("Bread", 23));
+        this.productRepository.insert(new Product("Butter",170));
+    }
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -43,7 +54,7 @@ public class ProductInfoServlet extends HttpServlet {
 
         for(Product product : productRepository.findAll()) {
              Long b = product.getId();
-             wr.printf("<p> Product ID= %d</p>%n", b);
+//             wr.printf("<p> Product ID= %d</p>%n", b);
                  if(a.equals(b)) {
                         wr.println("<tr>");
                         wr.println("<td>" + product.getId() + "</td>");
@@ -55,6 +66,6 @@ public class ProductInfoServlet extends HttpServlet {
 
 
         wr.println("</table>");
-        resp.getWriter().print("<p> Product" + productRepository.findById(a) + " </p>");
+//        resp.getWriter().print("<p> Product" + productRepository.findById(a) + " </p>");
     }
 }
