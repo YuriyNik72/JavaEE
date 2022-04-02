@@ -19,10 +19,15 @@
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.25</version>
+        </dependency>
     </dependencies>
 
     <build>
-        <finalName>servlet-app</finalName>
+        <finalName>servlet</finalName>
 
         <plugins>
             <plugin>
@@ -42,7 +47,7 @@
                     <url>http://localhost:8080/manager/text</url>
                     <username>admin</username>
                     <password>admin</password>
-                    <path>/servlet-app</path>
+                    <path>/servlet</path>
                 </configuration>
             </plugin>
         </plugins>
