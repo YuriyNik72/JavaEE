@@ -34,9 +34,10 @@ public class ProductController {
     }
 
     @GetMapping("/new")
-    public String newProduct(Product product) {
-        // TODO model.addAttribute("user", .........);
-        productRepository.save(product);
+    public String newProduct(Model model) {
+        // TODO
+        model.addAttribute("product", new Product(" "));
+    //    productRepository.save(product);
         return "product_form";
     }
 
