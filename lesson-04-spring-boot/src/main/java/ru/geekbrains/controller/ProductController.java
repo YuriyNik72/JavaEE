@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.geekbrains.persist.Product;
 import ru.geekbrains.persist.ProductRepository;
-
 import javax.validation.Valid;
+
 
 @RequestMapping("/product")
 @Controller
@@ -40,7 +40,6 @@ public class ProductController {
     public String newProduct(Model model) {
         // TODO
         model.addAttribute("product",new Product("", "", 0l));
-//        productRepository.save(product);
         return "product_form";
     }
 
@@ -53,9 +52,12 @@ public class ProductController {
           binding.rejectValue("coast","","Coast not value");
             return "product_form";
         }
+
+    public String save(Product product) {
         productRepository.save(product);
         return "redirect:/product";
     }
+      
     @GetMapping("/del/{id}")
     public String delete(@PathVariable("id") long id){
        productRepository.delete(id);

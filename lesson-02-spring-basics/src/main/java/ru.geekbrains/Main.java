@@ -2,36 +2,61 @@ package ru.geekbrains;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ru.geekbrains.persist.User;
+
+
 
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        //ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
         ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-        UserService userService = context.getBean("userService", UserService.class);
 
-        CartService cartService = context.getBean("cartService", CartService.class);
-        cartService = context.getBean("cartService", CartService.class);
-        cartService = context.getBean("cartService", CartService.class);
+        Scanner scn = new Scanner(System.in);
 
-        Scanner sc = new Scanner(System.in);
-        for (;;) {
-            System.out.print("Enter user name: ");
-            String name = sc.nextLine();
+        CartService cart = null;
+        while (true) {
+            System.out.print("Enter command: ");
+            String cmd = scn.nextLine().trim().toUpperCase();
+            switch (cmd) {
+                case "NEW":
+                    cart = context.getBean(CartService.class);
+                    System.out.println("Cart created");
+                    break;
 
-            System.out.print("Enter user role: ");
-            String role = sc.nextLine();
+                case "ADD":
+                    if (cart == null) {
+                        System.out.println("Please create a new Cart");
+                        break;
+                    }
+                    System.out.print("Enter id: ");
+                    long id = scn.nextLong();
+                    System.out.print("Enter count: ");
+                    int count = scn.nextInt();
+                    cart.addProduct(id, count);
+                    break;
 
-            try {
-                userService.insert(new User(name, role));
-            } catch (IllegalArgumentException ex) {
-                System.out.println("Incorrect role name");
+                case "SHOW":
+                    if (cart == null) {
+                        System.out.println("Please create a new Cart");
+                        break;
+                    }
+                    cart.getAll().forEach(System.out::println);
+                    break;
+
+                case "REM":
+                    if (cart == null) {
+                        System.out.println("This Cart not found");
+                        break;
+                    }
+                    System.out.print("Enter id: ");
+                    id = scn.nextLong();
+                    cart.removeProduct(id);
+                    break;
+
+                case "EXIT":
+                    return;
             }
-
-            System.out.println("New user added. Now " + userService.getCount() + " users in repository");
         }
     }
 }

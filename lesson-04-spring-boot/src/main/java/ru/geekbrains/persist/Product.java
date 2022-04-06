@@ -1,8 +1,9 @@
 package ru.geekbrains.persist;
 
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+
 
 public class Product {
 
@@ -10,17 +11,19 @@ public class Product {
 
     private String title;
 
+
     @Min(0l)
     @Max(100000l)
     private Long coast;
 
     private String description;
 
+
     public Product(String title, String description, Long coast ) {
         this.title = title;
         this.description = description;
         this.coast = coast;
-    }
+
 
     public Long getId() {
         return id;
