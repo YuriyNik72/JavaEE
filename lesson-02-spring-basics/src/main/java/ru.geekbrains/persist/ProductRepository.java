@@ -1,37 +1,20 @@
+
 package ru.geekbrains.persist;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
-public class ProductRepository {
+public interface ProductRepository {
 
-    private final Map<Long, Product> productMap = new ConcurrentHashMap<>();
+    List<Product> findAll();
 
-    private final AtomicLong identity = new AtomicLong(0);
+    Product findById(long id);
 
-    public List<Product> findAll() {
-        return new ArrayList<>(productMap.values());
-    }
+    void insert(Product product);
 
-    public Product findById(long id) {
-        return productMap.get(id);
-    }
+    void update(Product product);
 
-    public void insert(Product product) {
-        long id = identity.incrementAndGet();
-        product.setId(id);
-        productMap.put(id, product);
-    }
+    void delete(long id);
 
-    public void update(Product product) {
-        productMap.put(product.getId(), product);
-    }
-
-    public void delete(long id) {
-        productMap.remove(id);
-    }
-
+    long getCount();
 }
+
