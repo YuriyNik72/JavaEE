@@ -2,7 +2,7 @@ package ru.geekbrains.persist;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+
 
 public class Product {
 
@@ -53,4 +53,5 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }
