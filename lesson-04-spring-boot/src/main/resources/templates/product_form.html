@@ -48,6 +48,8 @@
                 <div class="form-group">
                     <label>Coast</label>
                     <input th:field="*{coast}" type="text" class="form-control" id="coast" name="coast" placeholder="Enter coast">
+                    <p class="text-danger" th:if="${#fields.hasErrors('coast')}" th:errors="*{coast}"></p>
+
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

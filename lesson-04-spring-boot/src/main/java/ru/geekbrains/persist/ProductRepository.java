@@ -18,11 +18,11 @@ public class ProductRepository {
 
     @PostConstruct
     public void init() {
-        this.save(new Product( "Product 1"));
-        this.save(new Product( "Product 2"));
-        this.save(new Product( "Product 3"));
-        this.save(new Product( "Product 4"));
-        this.save(new Product( "Product 5"));
+        this.save(new Product( "Product 1","Liquid",100l));
+        this.save(new Product( "Product 2", "Solid ", 1100l));
+        this.save(new Product( "Product 3", "Loose", 2100l));
+        this.save(new Product( "Product 4", "Liquid", 57100l));
+        this.save(new Product( "Product 5", "Solid", 45100l));     
     }
 
     public List<Product> findAll() {
