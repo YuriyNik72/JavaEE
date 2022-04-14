@@ -1,7 +1,7 @@
 package ru.geekbrains.model;
 
-import javax.persistence.*;
 
+import javax.persistence.*;
 
 @Entity
 @Table(name = "products")
@@ -71,4 +71,8 @@ public class Product {
                 '}';
     }
 
+    public void print() {
+        System.out.println("Product id= " + id +" ; Product name= " + title +
+                " ; Description= " + description + " ; Coast= " + coast);
+    }
 }
