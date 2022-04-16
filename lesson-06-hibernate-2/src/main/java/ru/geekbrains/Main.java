@@ -1,9 +1,10 @@
 package ru.geekbrains;
 
-import ru.geekbrains.model.SessionFactoryUtils;
 import ru.geekbrains.model.Product;
-import ru.geekbrains.model.ProductDAO;
-import ru.geekbrains.model.ProductDAOImpl;
+import ru.geekbrains.DAO.ProductDAO;
+import ru.geekbrains.DAO.ProductDAOImpl;
+import ru.geekbrains.utils.SessionFactoryUtils;
+
 import java.util.List;
 
 public class Main {
