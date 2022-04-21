@@ -6,7 +6,6 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -19,19 +18,19 @@ public class ProductRepository {
 
     @PostConstruct
     public void init() {
-        this.save(new Product( "Product 1","Liquid",100l));
-        this.save(new Product( "Product 2", "Solid ", 1100l));
-        this.save(new Product( "Product 3", "Loose", 2100l));
-        this.save(new Product( "Product 4", "Liquid", 57100l));
-        this.save(new Product( "Product 5", "Solid", 45100l));     
+        this.save(new Product( "Product 1"));
+        this.save(new Product( "Product 2"));
+        this.save(new Product( "Product 3"));
+        this.save(new Product( "Product 4"));
+        this.save(new Product( "Product 5"));
     }
 
     public List<Product> findAll() {
         return new ArrayList<>(productMap.values());
     }
 
-    public Optional<Product> findById(long id) {
-        return Optional.ofNullable(productMap.get(id));
+    public Product findById(long id) {
+        return productMap.get(id);
     }
 
     public Product save(Product product) {

@@ -8,8 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.persist.Product;
 import ru.geekbrains.persist.ProductRepository;
-
 import javax.validation.Valid;
+
 
 @RequestMapping("/product")
 @Controller
@@ -51,9 +51,12 @@ public class ProductController {
           binding.rejectValue("coast","","Coast not value");
             return "product_form";
         }
+
+    public String save(Product product) {
         productRepository.save(product);
         return "redirect:/product";
     }
+      
     @GetMapping("/del/{id}")
     public String delete(@PathVariable long id){
        productRepository.delete(id);
