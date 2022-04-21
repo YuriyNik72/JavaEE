@@ -17,12 +17,15 @@ public class Main {
 
            ProductDAO productDAO = new ProductDAOImpl(sessionFactoryUtils);
 
-            Product product = productDAO.findById(2l);
-            product.print();
+//            Product product = productDAO.findById(2l);
+//            product.print();
 
-//           List<Product> product = productDAO.findAll();
-//            product.forEach(System.out::println);
+//            productDAO.deleteById(2l);
+           List<Product> product = productDAO.findAll();
+            product.forEach(System.out::println);
 
+//            Product product = productDAO.saveOrUpdate(new Product("Product2","solid",200l));
+//            product.print();
 
         }catch (Exception e){
             e.printStackTrace();
