@@ -1,29 +1,34 @@
 package ru.geekbrains;
 
-import org.hibernate.cfg.Configuration;
+import ru.geekbrains.model.SessionFactoryUtils;
 import ru.geekbrains.model.Product;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import ru.geekbrains.model.ProductDAO;
+import ru.geekbrains.model.ProductDAOImpl;
+import java.util.List;
 
 public class Main {
+
     public static void main(String[] args) {
-        EntityManagerFactory emFactory = new Configuration()
-                .configure("hibernate.cfg.xml")
-                .buildSessionFactory();
 
-        EntityManager em = emFactory.createEntityManager();
+        SessionFactoryUtils sessionFactoryUtils = new SessionFactoryUtils();
+        sessionFactoryUtils.init();
 
-        em.getTransaction().begin();
+        try {
 
-        Product product = em.find(Product.class, 2L);
-        em.remove(product);
+           ProductDAO productDAO = new ProductDAOImpl(sessionFactoryUtils);
 
-        em.getTransaction().commit();
+            Product product = productDAO.findById(2l);
+            product.print();
 
-        em.close();
+//           List<Product> product = productDAO.findAll();
+//            product.forEach(System.out::println);
 
-        emFactory.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            sessionFactoryUtils.shutdown();
+        }
 
     }
 }
