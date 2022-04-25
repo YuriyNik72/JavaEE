@@ -1,36 +1,35 @@
-package ru.geekbrains.entity;
+package ru.geekbrains.dto;
 
 
-import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 
-@Entity
-@Table(name = "products")
-public class Product {
+public class ProductDto {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+        private Long id;
 
+        @NotBlank
+        private String title;
 
-    @Column(nullable = false)
-    private String title;
+        @NotBlank
+        private String description;
 
-    @Column
-    private String description;
+        @Min(1)
+        @Max(100000)
+        @NotBlank
+        private Long cost;
 
-    @Column(nullable = false)
-    private Long cost;
-
-    public Product(Long id, String title, String description, Long cost) {
+    public ProductDto(Long id, String title, String description, Long cost) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.cost = cost;
     }
 
-    public Product() {
-    }
+    public ProductDto() {
+     }
 
     public Long getId() {
         return id;

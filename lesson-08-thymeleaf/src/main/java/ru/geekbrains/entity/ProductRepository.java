@@ -1,22 +1,24 @@
 package ru.geekbrains.entity;
 
-//import org.springframework.stereotype.Repository;
-//import org.springframework.transaction.annotation.Transactional;
-//import javax.persistence.EntityManager;
-//import javax.persistence.PersistenceContext;
-//import java.util.List;
-//import java.util.Optional;
-
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import java.util.List;
 
-//@Repository
-public interface ProductRepository extends JpaRepository<Product, Long> {
+
+public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
 
 
-    List<Product> findAllProductByCostBetween(Long min, Long max);
+    @Query("select p " +
+            " from Product p " +
+            "where (p.cost like concat('%', :minCost, '%') or :minCost is null) and " +
+            "      (p.cost like concat('%', :maxCost, '%') or :maxCost is null)")
+    List<Product> findProductByFilter(@Param("minCost") Long minCost,
+                                      @Param("maxCost") Long maxCost);
+
+
 
 //    @Query("select u " +
 //            " from Product u " +
@@ -25,32 +27,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 //    List<Product> findProductByCostBetween(@Param("mincost") String mincost,
 //                                          @Param("maxcost") String maxcost);
 
-//    @PersistenceContext
-//    private EntityManager em;
-//
-//
-//    public List<Product> findAll() {
-//        return em.createQuery("from Product", Product.class)
-//                .getResultList();
-//    }
-//
-//    public Optional<Product> findById(long id) {
-//        return Optional.ofNullable(em.find(Product.class, id));
-//    }
-//    @Transactional
-//    public Product save(Product product) {
-//        if (product.getId() == null) {
-//            em.persist(product);
-//        }else {
-//            em.merge(product);
-//        }
-//        return product;
-//    }
-//    @Transactional
-//    public void delete(long id) {
-//       em.createQuery("delete from Product  where id = :id")
-//               .setParameter("id", id)
-//               .executeUpdate();
-//    }
 
 }
