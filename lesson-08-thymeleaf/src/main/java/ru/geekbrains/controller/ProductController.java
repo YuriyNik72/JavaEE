@@ -37,7 +37,7 @@ public class ProductController {
                 .filter(s -> !s.toString().isBlank())
                 .orElse(null);
         Integer pageValue = page.orElse(1)-1;
-        Integer sizeValue = size.orElse(3);
+        Integer sizeValue = size.orElse(5); // сколько строк будет выводится
         String sortFieldValue = sortField
                 .filter(s -> !s.isBlank())
                 .orElse("id");
