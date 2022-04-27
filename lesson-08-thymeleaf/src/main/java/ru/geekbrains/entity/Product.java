@@ -13,13 +13,13 @@ public class Product {
     private Long id;
 
 
-    @Column(nullable = false)
+    @Column(name = "title",nullable = false)
     private String title;
 
-    @Column
+    @Column(name = "description")
     private String description;
 
-    @Column(nullable = false)
+    @Column(name = "cost",nullable = false)
     private Long cost;
 
     public Product(Long id, String title, String description, Long cost) {

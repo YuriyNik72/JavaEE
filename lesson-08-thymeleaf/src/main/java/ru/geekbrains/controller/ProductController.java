@@ -24,18 +24,13 @@ public class ProductController {
     }
 
     @GetMapping
-    public String listPage(@RequestParam Optional<Long> minCostFilter,
-                           @RequestParam Optional<Long> maxCostFilter,
+    public String listPage(@RequestParam (name = "mincost", required=false) Optional<Long> minCost,
+                           @RequestParam (name = "maxcost", required=false) Optional<Long> maxCost,
                            @RequestParam Optional<Integer> page,
                            @RequestParam Optional<Integer> size,
                            @RequestParam Optional<String> sortField,
                            Model model) {
-        Long minCostFilterValue = minCostFilter
-                .filter(s -> !s.toString().isBlank())
-                .orElse(null);
-        Long maxCostFilterValue = maxCostFilter
-                .filter(s -> !s.toString().isBlank())
-                .orElse(null);
+
         Integer pageValue = page.orElse(1)-1;
         Integer sizeValue = size.orElse(5); // сколько строк будет выводится
         String sortFieldValue = sortField
@@ -43,8 +38,8 @@ public class ProductController {
                 .orElse("id");
 
           model.addAttribute("products", productService.findProductByFilter(
-                  minCostFilterValue,
-                  maxCostFilterValue,
+                  minCost,
+                  maxCost,
                   pageValue,
                   sizeValue,
                   sortFieldValue));

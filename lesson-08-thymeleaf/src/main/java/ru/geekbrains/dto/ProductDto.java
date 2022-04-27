@@ -18,7 +18,6 @@ public class ProductDto {
 
         @Min(1)
         @Max(100000)
-        @NotBlank
         private Long cost;
 
     public ProductDto(Long id, String title, String description, Long cost) {
