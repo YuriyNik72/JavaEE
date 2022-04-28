@@ -67,6 +67,17 @@ public class ProductResource {
         return productService.save(product);
     }
 
+    @DeleteMapping("/{id}/id")
+    public int delete(@PathVariable long id){
+        productService.deleteById(id);
+       return HttpStatus.OK.value();
+    }
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler
+    public ExceptionDto exception(SQLException ex) {
+        return new ExceptionDto();
+    }
+
 //    @ResponseStatus(HttpStatus.NOT_FOUND)
 //    @ExceptionHandler
 //    public String notFoundException(NotFoundException ex) {
@@ -84,11 +95,5 @@ public class ProductResource {
 //    public String sqlException(SQLException ex) {
 //        return ex.getMessage();
 //    }
-
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler
-    public ExceptionDto exception(SQLException ex) {
-        return new ExceptionDto();
-    }
 
 }
