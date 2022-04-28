@@ -6,6 +6,7 @@
 
 <body>
 
+
 <nav th:replace="fragments/head.html :: navigation">
 </nav>
 
@@ -33,11 +34,13 @@
                 <button type="submit" class="btn btn-primary mb-2">Apply</button>
             </form>
         </div>
+
         <!--Сортировка по колонкам-->
         <div class="col-12">
             <table class="table table-bordered my-2">
                 <thead>
                 <tr>
+
                     <th th:replace="fragments/sorting.html :: sorting('Id', 'id')">
                     </th>
                     <th th:replace="fragments/sorting.html :: sorting('Title', 'title')">
@@ -49,6 +52,7 @@
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
+
                 <!--Вывод вывод данных в столбцы и строки -->
                 <tbody>
                 <tr th:unless="${products.isEmpty()}" th:each="product : ${products}">
@@ -57,6 +61,7 @@
                     <td th:text="${product.description}">Description</td>
                     <td th:text="${product.cost}">Cost</td>
                     <td th:unless="${products.isEmpty()}">
+
                         <!-- Кнопка удаления продукта -->
                         <a class="btn btn-success" th:href="@{/product/{id}(id = ${product.id})}"><i class="fas fa-edit"></i></a>
                         <form class="d-inline" th:method="delete" th:action="@{/product/{id}(id = ${product.id})}">
@@ -72,6 +77,7 @@
                 </tbody>
             </table>
         </div>
+
         <!--Пагинация (переход по номерам страниц)-->
         <div th:unless="${products.isEmpty()}" class="col-12">
             <nav aria-label="...">
