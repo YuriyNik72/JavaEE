@@ -57,6 +57,8 @@
         <module>lesson-07-spring-data</module>
         <module>lesson-08-thymeleaf</module>
         <module>lesson-09-spring-rest</module>
+        <module>lesson-10-spring-rest-2</module>
+        <module>lesson-11-spring-security</module>
 
 
 
