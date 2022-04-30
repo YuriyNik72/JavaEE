@@ -11,6 +11,7 @@ import ru.geekbrains.entity.ProductRepository;
 
 import javax.validation.Valid;
 
+
 @RequestMapping("/product")
 @Controller
 public class ProductController {
@@ -23,8 +24,10 @@ public class ProductController {
     }
 
     @GetMapping
-    public String listPage(Model model) {
-        model.addAttribute("products", productRepository.findAll());
+    public String listPage(@RequestParam(name = "mincost", required=false, defaultValue = "1") Long min,
+                           @RequestParam(name = "maxcost", required=false, defaultValue= "1000000000") Long max,
+                           Model model) {
+            model.addAttribute("products", productRepository.findAllProductByCostBetween(min, max));
         return "product";
     }
 
@@ -46,7 +49,7 @@ public class ProductController {
         if(binding.hasErrors()){
             return "product_form";
         }
-        if(product.getCost()<=0l || product.getCost()>=100000l){
+        if(product.getCost()<=0|| product.getCost()>=100000){
           binding.rejectValue("cost","","Cost not value");
             return "product_form";
         }
@@ -55,7 +58,8 @@ public class ProductController {
     }
     @GetMapping("/del/{id}")
     public String delete(@PathVariable long id){
-       productRepository.delete(id);
+//       productRepository.delete(id);
+       productRepository.deleteById(id);
        return "redirect:/product";
     }
 

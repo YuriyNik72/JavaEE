@@ -18,8 +18,8 @@ public class Product {
     @Column
     private String description;
 
-    @Min(1l)
-    @Max(100000l)
+    @Min(1)
+    @Max(100000)
     @Column(nullable = false)
     private Long cost;
 

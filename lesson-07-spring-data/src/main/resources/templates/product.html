@@ -35,9 +35,24 @@
 <div class="container">
     <div class="row py-2">
         <div class="col-12">
-            <!-- TODO -->
-            <!--/*@thymesVar id="id" type=""*/-->
             <a class="btn btn-primary" th:href="@{/product/new}">Add Product</a>
+        </div>
+        <div class="col-12 mt-3">
+            <form class="form-inline">
+                <div class="form-group mb-2 mr-2">
+                    <label for="mincost" class="sr-only">Cost filter</label>
+                    <input type="text" class="form-control" id="mincost" th:value="${param.costFilter}"
+                           name="mincost" placeholder="min Cost">
+                </div>
+
+                <div class="form-group mb-2 mr-2">
+                    <label for="maxcost" class="sr-only">Cost filter</label>
+                    <input type="text" class="form-control" id="maxcost" th:value="${param.costFilter}"
+                                   name="maxcost" placeholder="max Cost">
+                </div>
+
+                <button type="submit" class="btn btn-primary mb-2">Apply</button>
+            </form>
         </div>
 
         <div class="col-12">
