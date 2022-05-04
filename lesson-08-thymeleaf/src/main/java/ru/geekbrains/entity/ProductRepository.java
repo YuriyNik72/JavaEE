@@ -1,56 +1,36 @@
 package ru.geekbrains.entity;
 
-//import org.springframework.stereotype.Repository;
-//import org.springframework.transaction.annotation.Transactional;
-//import javax.persistence.EntityManager;
-//import javax.persistence.PersistenceContext;
-//import java.util.List;
-//import java.util.Optional;
 
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
+import java.util.Optional;
 
-//@Repository
+
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
 
-    List<Product> findAllProductByCostBetween(Long min, Long max);
+//    @Query("select p " +
+//            " from Product p " +
+//            "where p.cost > ?1 ORDER BY ASC  or p.cost is null and " +
+//            "      p.cost < ?2 ORDER BY ASC  or p.cost is null and " +
+//            "       p.cost between ?1 and ?2")
+//    List<Product> findProductByFilter(@Param("minCost") Long minCost,
+//                                      @Param("maxCost") Long maxCost);
 
-//    @Query("select u " +
-//            " from Product u " +
-//            "where (u.cost like concat('%', :cost, '%') or :cost is null) and " +
-//            "      (u.cost like concat('%', :cost, '%') or :cost is null)")
-//    List<Product> findProductByCostBetween(@Param("mincost") String mincost,
-//                                          @Param("maxcost") String maxcost);
 
-//    @PersistenceContext
-//    private EntityManager em;
+//    @Query("select p from Product p where p.cost > ?1")
+//    Page<Product> findProductByCostAfter(Long minCost, Pageable pageable);
 //
 //
-//    public List<Product> findAll() {
-//        return em.createQuery("from Product", Product.class)
-//                .getResultList();
-//    }
-//
-//    public Optional<Product> findById(long id) {
-//        return Optional.ofNullable(em.find(Product.class, id));
-//    }
-//    @Transactional
-//    public Product save(Product product) {
-//        if (product.getId() == null) {
-//            em.persist(product);
-//        }else {
-//            em.merge(product);
-//        }
-//        return product;
-//    }
-//    @Transactional
-//    public void delete(long id) {
-//       em.createQuery("delete from Product  where id = :id")
-//               .setParameter("id", id)
-//               .executeUpdate();
-//    }
+//    @Query("select p from Product p where p.cost < ?1")
+//    Page<Product> findProductByCostBefore(Long maxCost, Pageable pageable);
+
+
+    @Query("select p from Product p where p.cost between ?1 and ?2")
+    Page<Product> findProductByCostBetween(Optional<Long> minCost, Optional<Long> maxCost, Pageable pageable);
+
 
 }

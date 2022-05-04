@@ -6,60 +6,74 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.geekbrains.entity.Product;
-import ru.geekbrains.entity.ProductRepository;
-
+import ru.geekbrains.dto.ProductDto;
+import ru.geekbrains.service.ProductService;
 import javax.validation.Valid;
+import java.util.Optional;
 
 
 @RequestMapping("/product")
 @Controller
 public class ProductController {
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
     @Autowired
-    public ProductController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductController(ProductService productService){
+        this.productService = productService;
     }
 
     @GetMapping
-    public String listPage(@RequestParam(name = "mincost", required=false, defaultValue = "1") Long min,
-                           @RequestParam(name = "maxcost", required=false, defaultValue= "1000000000") Long max,
+    public String listPage(@RequestParam (name = "mincost", required=false) Optional<Long> minCost,
+                           @RequestParam (name = "maxcost", required=false) Optional<Long> maxCost,
+                           @RequestParam Optional<Integer> page,
+                           @RequestParam Optional<Integer> size,
+                           @RequestParam Optional<String> sortField,
                            Model model) {
-            model.addAttribute("products", productRepository.findAllProductByCostBetween(min, max));
+
+        Integer pageValue = page.orElse(1)-1;
+        Integer sizeValue = size.orElse(5); // сколько строк будет выводится
+        String sortFieldValue = sortField
+                .filter(s -> !s.isBlank())
+                .orElse("id");
+
+          model.addAttribute("products", productService.findProductByFilter(
+                  minCost,
+                  maxCost,
+                  pageValue,
+                  sizeValue,
+                  sortFieldValue));
         return "product";
     }
 
     @GetMapping("/{id}")
     public String form(@PathVariable long id, Model model) {
-        model.addAttribute("product", productRepository.findById(id)
+        model.addAttribute("product", productService.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product not found")));;
         return "product_form";
     }
 
     @GetMapping("/new")
     public String newProduct(Model model) {
-        model.addAttribute("product",new Product("", "", 0l));
+        model.addAttribute("product",new ProductDto());
         return "product_form";
     }
 
     @PostMapping
-    public String save(@Valid Product product, BindingResult binding) {
+    public String save(@Valid @ModelAttribute("product") ProductDto product, BindingResult binding) {
         if(binding.hasErrors()){
             return "product_form";
         }
-        if(product.getCost()<=0|| product.getCost()>=100000){
+        if(product.getCost()<=0|| product.getCost()>=100000000){
           binding.rejectValue("cost","","Cost not value");
             return "product_form";
         }
-        productRepository.save(product);
+        productService.save(product);
         return "redirect:/product";
     }
-    @GetMapping("/del/{id}")
+    @DeleteMapping("/{id}")
     public String delete(@PathVariable long id){
-//       productRepository.delete(id);
-       productRepository.deleteById(id);
+        productService.deleteById(id);
        return "redirect:/product";
     }
 
