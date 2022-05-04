@@ -1,0 +1,21 @@
+GET http://localhost:8080/mvc/rest/v1/product/all
+
+
+###
+
+GET  http://localhost:8080/mvc/rest/v1/cart/user/1
+Content-Type: application/json
+
+
+
+###
+
+PUT  http://localhost:8080/mvc/rest/v1/product
+Content-Type: application/json
+
+   {
+      "id": 12,
+      "title": "Product 14",
+      "description": "Liquid",
+      "cost": 30101
+    }
