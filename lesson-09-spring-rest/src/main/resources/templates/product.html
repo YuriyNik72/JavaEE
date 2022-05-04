@@ -1,35 +1,13 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
-    <title>EShop application</title>
+<head th:replace="fragments/head.html :: head">
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">EShop</a>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">List</a>
-            </li>
-        </ul>
-    </div>
+<nav th:replace="fragments/head.html :: navigation">
 </nav>
 
 <div class="container">
@@ -57,29 +35,25 @@
             </form>
         </div>
 
+        <!--Сортировка по колонкам-->
         <div class="col-12">
             <table class="table table-bordered my-2">
                 <thead>
                 <tr>
-                    <th scope="col">Id
-                        <a th:href="@{/product(page=${param.page}, size=${param.size}, minCost=${param.minCost}, maxCost=${param.maxCost}, sortField=${'id'})}">
-                            <i class="fa fa-sort-down"></i></a>
+
+                    <th th:replace="fragments/sorting.html :: sorting('Id', 'id')">
                     </th>
-                    <th scope="col">Title
-                        <a th:href="@{/product(page=${param.page}, size=${param.size}, minCost=${param.minCost}, maxCost=${param.maxCost}, sortField=${'title'})}">
-                            <i class="fa fa-sort-down"></i></a>
+                    <th th:replace="fragments/sorting.html :: sorting('Title', 'title')">
                     </th>
-                    <th scope="col">Description
-                        <a th:href="@{/product(page=${param.page}, size=${param.size}, minCost=${param.minCost}, maxCost=${param.maxCost}, sortField=${'description'})}">
-                            <i class="fa fa-sort-down"></i></a>
+                    <th th:replace="fragments/sorting.html :: sorting('Description', 'description')">
                     </th>
-                    <th scope="col">Cost
-                        <a th:href="@{/product(page=${param.page}, size=${param.size}, minCost=${param.minCost}, maxCost=${param.maxCost}, sortField=${'cost'})}">
-                            <i class="fa fa-sort-down"></i></a>
+                    <th th:replace="fragments/sorting.html :: sorting('Cost', 'cost')">
                     </th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
+
+                <!--Вывод вывод данных в столбцы и строки -->
                 <tbody>
                 <tr th:unless="${products.isEmpty()}" th:each="product : ${products}">
                     <th scope="row" th:text="${product.id}">1</th>
@@ -87,7 +61,9 @@
                     <td th:text="${product.description}">Description</td>
                     <td th:text="${product.cost}">Cost</td>
                     <td th:unless="${products.isEmpty()}">
-                        <a class="btn btn-success" th:href="@{/product/del/{id}(id = ${product.id})}"><i class="fas fa-edit"></i></a>
+
+                        <!-- Кнопка удаления продукта -->
+                        <a class="btn btn-success" th:href="@{/product/{id}(id = ${product.id})}"><i class="fas fa-edit"></i></a>
                         <form class="d-inline" th:method="delete" th:action="@{/product/{id}(id = ${product.id})}">
                             <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                         </form>
@@ -102,6 +78,7 @@
             </table>
         </div>
 
+        <!--Пагинация (переход по номерам страниц)-->
         <div th:unless="${products.isEmpty()}" class="col-12">
             <nav aria-label="...">
                 <ul class="pagination">
@@ -139,16 +116,8 @@
     </div>
 </div>
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+<th:block th:replace="fragments/footer.html :: scripts">
+</th:block>
+
 </body>
 </html>
