@@ -1,0 +1,36 @@
+GET http://localhost:8080/mvc/rest/v1/product/all
+
+
+###
+
+POST  http://localhost:8080/mvc/rest/v1/product
+Content-Type: application/json
+
+    {
+
+      "title": "Product 10",
+      "description": "Loose",
+      "cost": 2080
+    }
+
+###
+
+PUT  http://localhost:8080/mvc/rest/v1/product
+Content-Type: application/json
+
+   {
+      "id": 12,
+      "title": "Product 14",
+      "description": "Liquid",
+      "cost": 30101
+    }
+
+###
+POST  http://localhost:8080/mvc/rest/v1/user
+Content-Type: application/json
+
+{
+  "username": "user 2",
+  "email": "qewqr@dfg.oo",
+  "password": "123Qwert"
+}
