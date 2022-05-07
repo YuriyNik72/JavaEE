@@ -3,6 +3,7 @@ package ru.geekbrains.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Data
@@ -12,7 +13,7 @@ import javax.persistence.*;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
 
@@ -32,4 +33,13 @@ public class Product {
         this.cost = cost;
     }
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", cost=" + cost +
+                '}';
+    }
 }

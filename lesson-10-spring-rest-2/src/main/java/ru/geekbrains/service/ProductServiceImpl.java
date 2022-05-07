@@ -8,7 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.dto.ProductDto;
 import ru.geekbrains.entity.Product;
-import ru.geekbrains.repository.ProductRepository;
+import ru.geekbrains.entity.ProductRepository;
 
 import java.util.Optional;
 
